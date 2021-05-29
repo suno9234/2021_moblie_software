@@ -2,7 +2,6 @@ package com.example.project;
 
 import android.os.Bundle;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -12,12 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.Api;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,7 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 
-public class login_main extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
     SignInButton Google_Login;
 
     private static final int RC_SIGN_IN = 1000;
@@ -47,10 +44,10 @@ public class login_main extends AppCompatActivity implements GoogleApiClient.OnC
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        GoogleSignInAccount gsa = GoogleSignIn.getLastSignedInAccount(login_main.this);
+        GoogleSignInAccount gsa = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
         if (gsa !=null){
-            Toast.makeText(login_main.this,"로그인 되었습니다",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(),second.class);
+            Toast.makeText(LoginActivity.this,"로그인 되었습니다",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), MenuSelectActivity.class);
             startActivity(intent);
         }
         mAuth = FirebaseAuth.getInstance();
@@ -76,7 +73,7 @@ public class login_main extends AppCompatActivity implements GoogleApiClient.OnC
                 firebaseAuthWithGoogle(account);
             }
             else{
-                //구글 로그인 실패
+                Toast.makeText(LoginActivity.this, "구글 로그인 인증 실패", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -87,9 +84,9 @@ public class login_main extends AppCompatActivity implements GoogleApiClient.OnC
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            Toast.makeText(login_main.this, "인증 실패", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "인증 실패", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(login_main.this, "구글 로그인 인증 성공", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "구글 로그인 인증 성공", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
