@@ -3,15 +3,6 @@ import time
 import requests
 
 
-check="http://icanhazip.com/"
-proxies={
-    'http':'socks5://127.0.0.1:9050',
-    'https':'socks5://127.0.0.1:9050',
-}
-print("start")
-c_res =  requests.get(check,proxies=proxies)
-print(c_res.text)
-"""
 with open("elementary_3.txt","r",encoding="utf-8") as f:
     lines = f.readlines()
     elementary_3_mean = open("ele_3_mean.txt","w",encoding="utf-8")
@@ -40,4 +31,3 @@ with open("elementary_3.txt","r",encoding="utf-8") as f:
         print(temp)
         elementary_3_mean.write(word+"\n "+temp+"\n")
     elementary_3_mean.close()
-"""
