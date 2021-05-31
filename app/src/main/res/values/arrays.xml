@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name ="year">
+        <item>초1</item>
+        <item>초3</item>
+        <item>초5</item>
+        <item>중딩</item>
+        <item>고딩</item>
+    </string-array>
+</resources>

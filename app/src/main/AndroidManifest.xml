@@ -24,8 +24,10 @@
         <activity android:name =".LoginActivity">
         </activity>
         <activity android:name=".MenuSelectActivity">
-
         </activity>
+        <activity android:name=".UserInfo"
+            />
+        <activity android:name=".Board" />
     </application>
 
 </manifest>

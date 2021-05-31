@@ -1,5 +1,6 @@
 package com.example.project;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,10 +24,12 @@ public class MenuSelectActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.change:
-                Toast.makeText(this, "첫번째", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(),UserInfo.class);
+                startActivity(intent);
                 return true;
             case R.id.logout:
-                Toast.makeText(this, "두번째", Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(getApplicationContext(),Board.class);
+                startActivity(intent2);
                 return true;
         }
         return super.onOptionsItemSelected(item);
