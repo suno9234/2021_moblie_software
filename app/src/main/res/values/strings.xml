@@ -10,7 +10,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="daily_quiz">일일 퀴즈</string>
-    <string name="full_study">전체 단어\n학습하기</string>
+    <string name="full_study">전체 단어 보기</string>
     <string name="ranking">랭킹확인</string>
     <string name="notice_board">게시판</string>
     <string name="preference">환경설정</string>
