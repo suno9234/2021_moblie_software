@@ -45,11 +45,11 @@ public class UserInfo extends AppCompatActivity {
         btn.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View view){
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference userRef =  database.getReference("users");
+                DatabaseReference databaseReference =  database.getReference();
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user!=null) {
                     String uid = user.getUid();
-                    userRef.setValue(uid);
+                    databaseReference.child("users").child(uid).setValue("1");
                 }
             }
         });

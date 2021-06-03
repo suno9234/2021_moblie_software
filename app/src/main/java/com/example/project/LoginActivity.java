@@ -3,6 +3,7 @@ package com.example.project;
 import android.os.Bundle;
 import android.content.Intent;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,9 +28,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.Console;
 
@@ -110,6 +114,31 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             Toast.makeText(LoginActivity.this, "인증 실패", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(LoginActivity.this, "구글 로그인 인증 성공", Toast.LENGTH_SHORT).show();
+
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference databaseReference =  database.getReference();
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            if (user!=null) {
+                                String uid = user.getUid();
+                                databaseReference.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot.getChildren() != null){
+                                            Log.d("MainActivity","Single ValueEventListener : "+ dataSnapshot.getValue());
+                                        }else{
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
+                            }
+
                             Intent intent = new Intent(getApplicationContext(), MenuSelectActivity.class);
                             startActivity(intent);
                             finish();

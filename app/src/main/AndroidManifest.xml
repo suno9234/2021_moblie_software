@@ -28,6 +28,7 @@
         <activity android:name=".UserInfo"
             />
         <activity android:name=".Board" />
+        <activity android:name=".InsertInfo"/>
     </application>
 
 </manifest>
