@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MenuSelectActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -28,7 +30,8 @@ public class MenuSelectActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.logout:
-                Intent intent2 = new Intent(getApplicationContext(),Board.class);
+                FirebaseAuth.getInstance().signOut();
+                Intent intent2 = new Intent(getApplicationContext(),LoginActivity.class);
                 startActivity(intent2);
                 return true;
         }

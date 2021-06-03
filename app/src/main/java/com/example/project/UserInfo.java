@@ -7,12 +7,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class UserInfo extends AppCompatActivity {
 
@@ -35,8 +41,23 @@ public class UserInfo extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent){
             }
         });
+        Button btn = (Button) findViewById(R.id.changeBtn);
+        btn.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View view){
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference userRef =  database.getReference("users");
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user!=null) {
+                    String uid = user.getUid();
+                    userRef.setValue(uid);
+                }
+            }
+        });
+
 
     }
+
+
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

@@ -2,6 +2,7 @@ package com.example.project;
 
 import android.os.Bundle;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,7 +25,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+
+import java.io.Console;
 
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
@@ -52,16 +59,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         GoogleSignInAccount gsa = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
 
-        if (gsa !=null){
-            Toast.makeText(LoginActivity.this,"로그인 되었습니다",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(), MenuSelectActivity.class);
-            startActivity(intent);
-            finish();
-        }
+
 
         mAuth = FirebaseAuth.getInstance();
 
         Google_Login = findViewById(R.id.Google_Login);
+
+        //구글 로그인 버튼에 동작 달아둔거(버튼 누르면 작동하는거)
         Google_Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,9 +73,19 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
         });
+        /*
+        if (gsa !=null){
+            Toast.makeText(LoginActivity.this,"로그인 되었습니다",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), MenuSelectActivity.class);
+            startActivity(intent);
+            finish();
+        }
+         */
+
         FirebaseAuth.getInstance().signOut();
 
     }
+    // 구글 로그인이 성공할 경우 onActivityResult 호출됨
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
@@ -96,6 +110,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             Toast.makeText(LoginActivity.this, "인증 실패", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(LoginActivity.this, "구글 로그인 인증 성공", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), MenuSelectActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
                     }
                 });
