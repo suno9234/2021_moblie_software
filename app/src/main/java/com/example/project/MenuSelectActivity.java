@@ -37,5 +37,10 @@ public class MenuSelectActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    public void onBackPressed() {
+        //안드로이드 백버튼 막기
+        finish();
+        return;
+    }
 
 }

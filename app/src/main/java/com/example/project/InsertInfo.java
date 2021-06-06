@@ -2,55 +2,55 @@ package com.example.project;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
-public class InsertInfo extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
 
-        TextView txtText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.net.Inet4Address;
+
+public class InsertInfo extends AppCompatActivity {
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            //타이틀바 없애기
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
             setContentView(R.layout.insertinfo_popup);
+            Button b = (Button) findViewById(R.id.first_to_menuselect);
+            b.setOnClickListener(new Button.OnClickListener(){
+                public void onClick(View view){
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference databaseReference =  database.getReference();
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    Spinner spinner = (Spinner)findViewById(R.id.first_enter_year);
+                    String _text = spinner.getSelectedItem().toString();
+                    if (user!=null) {
+                        String uid = user.getUid();
+                        databaseReference.child("users").child(uid).child("year").setValue(_text);
+                    }
+                    Intent intent = new Intent(InsertInfo.this,MenuSelectActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
 
-            //UI 객체생성
-            txtText = (TextView)findViewById(R.id.txtText);
 
-            //데이터 가져오기
-            Intent intent = getIntent();
-            String data = intent.getStringExtra("data");
-            txtText.setText(data);
         }
 
-        //확인 버튼 클릭
-        public void mOnClose(View v){
-            //데이터 전달하기
-            Intent intent = new Intent();
-            intent.putExtra("result", "Close Popup");
-            setResult(RESULT_OK, intent);
 
-            //액티비티(팝업) 닫기
-            finish();
-        }
-
-        @Override
-        public boolean onTouchEvent(MotionEvent event) {
-            //바깥레이어 클릭시 안닫히게
-            if(event.getAction()==MotionEvent.ACTION_OUTSIDE){
-                return false;
-            }
-            return true;
-        }
-
-        @Override
         public void onBackPressed() {
             //안드로이드 백버튼 막기
             return;

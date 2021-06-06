@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +36,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Console;
 
@@ -120,28 +124,35 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             if (user!=null) {
                                 String uid = user.getUid();
-                                databaseReference.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                databaseReference.child("users").addValueEventListener(new ValueEventListener() {
                                     @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        if (dataSnapshot.getChildren() != null){
-                                            Log.d("MainActivity","Single ValueEventListener : "+ dataSnapshot.getValue());
-                                        }else{
+                                    public void onDataChange(DataSnapshot snapshot) {
 
+                                        Object o= snapshot.child(uid).getValue();
+                                        if (o == null){
+                                            Log.d("test", "new ID");
+                                            Intent intent = new Intent(LoginActivity.this,InsertInfo.class);
+                                            startActivity(intent);
+
+                                        }else{
+                                            Log.d("test","exist UID : ");
+                                            Intent intent = new Intent(LoginActivity.this, MenuSelectActivity.class);
+                                            startActivity(intent);
                                         }
+                                        finish();
                                     }
 
                                     @Override
-                                    public void onCancelled(DatabaseError databaseError) {
+                                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
                                     }
                                 });
 
-
                             }
 
-                            Intent intent = new Intent(getApplicationContext(), MenuSelectActivity.class);
-                            startActivity(intent);
-                            finish();
+
+
+
                         }
                     }
                 });
@@ -150,6 +161,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
+
 
 
 }

@@ -1,5 +1,6 @@
 package com.example.project;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,10 +48,15 @@ public class UserInfo extends AppCompatActivity {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference =  database.getReference();
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                Spinner spinner = (Spinner)findViewById(R.id.spinner_year);
+                String _text = spinner.getSelectedItem().toString();
                 if (user!=null) {
                     String uid = user.getUid();
-                    databaseReference.child("users").child(uid).setValue("1");
+                    databaseReference.child("users").child(uid).child("year").setValue(_text);
                 }
+                Intent intent = new Intent(UserInfo.this,MenuSelectActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
