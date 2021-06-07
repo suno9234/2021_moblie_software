@@ -53,9 +53,10 @@ public class UserInfo extends AppCompatActivity {
                 if (user!=null) {
                     String uid = user.getUid();
                     databaseReference.child("users").child(uid).child("year").setValue(_text);
+                    Toast.makeText(UserInfo.this, "변경되었습니다", Toast.LENGTH_SHORT).show();
                 }
-                Intent intent = new Intent(UserInfo.this,MenuSelectActivity.class);
-                startActivity(intent);
+                /*Intent intent = new Intent(UserInfo.this,MenuSelectActivity.class);
+                startActivity(intent);*/
                 finish();
             }
         });
