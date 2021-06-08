@@ -30,6 +30,7 @@
         <activity android:name=".Board" />
         <activity android:name=".InsertInfo"/>
         <activity android:name=".DailyQuizActivity"/>
+        <activity android:name=".TotalWords"/>
     </application>
 
 </manifest>

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -16,6 +18,36 @@ public class MenuSelectActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_select);
+
+        Button daily = (Button)findViewById(R.id.button1);
+        daily.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View view){
+                Intent intent = new Intent(MenuSelectActivity.this,DailyQuizActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button total_word = (Button)findViewById(R.id.button2);
+        total_word.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View view){
+                Intent intent = new Intent(MenuSelectActivity.this,TotalWords.class);
+                startActivity(intent);
+            }
+        });
+
+        Button board = (Button)findViewById(R.id.button3);
+        board.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View view){
+                Intent intent = new Intent(MenuSelectActivity.this,Board.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+
+
+
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
