@@ -50,7 +50,6 @@ public class InsertInfo extends AppCompatActivity {
 
         }
 
-
         public void onBackPressed() {
             //안드로이드 백버튼 막기
             return;
