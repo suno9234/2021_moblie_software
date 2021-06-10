@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+
 public class UserInfo extends AppCompatActivity {
 
     @Override
@@ -50,9 +52,17 @@ public class UserInfo extends AppCompatActivity {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 Spinner spinner = (Spinner)findViewById(R.id.spinner_year);
                 String _text = spinner.getSelectedItem().toString();
-                if (user!=null) {
+                HashMap<String,Integer> map = new HashMap<String,Integer>(){{
+                   put("초1", 1);
+                   put("초3", 2);
+                   put("초5", 3);
+                   put("중딩", 4);
+                   put("고딩", 5);
+                }};
+
+                if (user != null) {
                     String uid = user.getUid();
-                    databaseReference.child("users").child(uid).child("year").setValue(_text);
+                    databaseReference.child("users").child(uid).child("year").setValue(map.get(_text));
                     Toast.makeText(UserInfo.this, "변경되었습니다", Toast.LENGTH_SHORT).show();
                 }
                 /*Intent intent = new Intent(UserInfo.this,MenuSelectActivity.class);
@@ -61,10 +71,7 @@ public class UserInfo extends AppCompatActivity {
             }
         });
 
-
     }
-
-
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

@@ -47,7 +47,6 @@ public class MenuSelectActivity extends AppCompatActivity {
 
 
 
-
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

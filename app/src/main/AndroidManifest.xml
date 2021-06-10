@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Project">
 
         <activity
-            android:name=".WordtoServer"
+            android:name=".MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +31,7 @@
         <activity android:name=".InsertInfo"/>
         <activity android:name=".DailyQuizActivity"/>
         <activity android:name=".TotalWords"/>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".WordtoServer"/>
 
     </application>
 

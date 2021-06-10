@@ -40,8 +40,6 @@ public class WordtoServer extends AppCompatActivity {
             }
         });
 
-
-
     }
     public void copyDBMethod(){
         boolean bResult = isCheckDB(getApplicationContext());
@@ -96,6 +94,7 @@ public class WordtoServer extends AppCompatActivity {
         }
     }
 }
+
 class DBHelper extends SQLiteOpenHelper{
 
     public static final String DATABASE_NAME ="appdb.db";
@@ -106,27 +105,11 @@ class DBHelper extends SQLiteOpenHelper{
     }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
-    }
-    public Cursor readRecord(){
-        SQLiteDatabase db = getReadableDatabase();
-        String [] projection={
-
-        };
-        Cursor cursor =db.query(
-          "",
-          projection,
-          null,
-          null,
-          null,
-          null,
-                null
-
-        );
-        return cursor;
     }
 }
