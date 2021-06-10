@@ -24,14 +24,24 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+<<<<<<< HEAD
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+=======
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.Set;
+import java.util.TreeSet;
+>>>>>>> 4ad367ee41910ddb9191615ac32ad409a8e1eabf
 
 
 public class WordtoServer extends AppCompatActivity {
 
     DBHelper dbhelper;
     SQLiteDatabase sqlDB;
+    Random rand = new Random();
+
 
 
     @Override
@@ -48,10 +58,126 @@ public class WordtoServer extends AppCompatActivity {
                 FirebaseDatabase fdb = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference = fdb.getReference();
                 sqlDB = dbhelper.getReadableDatabase();
-                Cursor cursor = sqlDB.rawQuery("SELECT *FROM Word;",null);
-                while (cursor.moveToNext()){
-                    Log.d("db",cursor.getString(0));
+
+                int grade_ele1;
+                Set<Integer> set = new TreeSet<Integer>();
+                Cursor cursor = sqlDB.rawQuery("SELECT *FROM Word WHERE grade =1;",null);
+                grade_ele1 = cursor.getCount();
+
+                while(set.size()<30){
+                    int temp2 = rand.nextInt(grade_ele1);
+
+                    set.add(temp2);
                 }
+                Iterator<Integer> iter = set.iterator();
+                HashMap<String,String> hm = new HashMap<String, String>();
+                while (iter.hasNext()){
+                    cursor.moveToPosition(iter.next());
+                    if (cursor.getString(0).contains("/")||cursor.getString(0).contains(".")){
+                        continue;
+                    }
+                    hm.put(cursor.getString(0),cursor.getString(1));
+                }
+
+                databaseReference.child("daily").child("ele_1").setValue(hm);
+                cursor.close();
+
+                Log.d("db","ele1_END");
+
+                int grade_ele3;
+                Set<Integer> set2 = new TreeSet<Integer>();
+
+                Cursor cursor2 = sqlDB.rawQuery("SELECT *FROM Word WHERE grade =2;",null);
+
+                grade_ele3 = cursor2.getCount();
+                while(set2.size()<30){
+                    int temp2 = rand.nextInt(grade_ele3);
+                    set2.add(temp2);
+                }
+
+                Iterator<Integer> iter2 = set2.iterator();
+                HashMap<String,String> hm2 = new HashMap<String, String>();
+
+                while (iter2.hasNext()){
+                    cursor2.moveToPosition(iter2.next());
+                    if (cursor2.getString(0).contains("/")||cursor2.getString(0).contains(".")){
+                        continue;
+                    }
+                    hm2.put(cursor2.getString(0),cursor2.getString(1));
+                }
+
+                databaseReference.child("daily").child("ele_3").setValue(hm2);
+                cursor2.close();
+
+                Log.d("db","ele3_END");
+
+                int grade_ele5;
+                Set<Integer> set3 = new TreeSet<Integer>();
+                Cursor cursor3 = sqlDB.rawQuery("SELECT *FROM Word WHERE grade =3;",null);
+                grade_ele5 = cursor3.getCount();
+
+                while(set3.size()<30){
+                    int temp2 = rand.nextInt(grade_ele5);
+                    set3.add(temp2);
+                }
+
+                Iterator<Integer> iter3 = set3.iterator();
+                HashMap<String,String> hm3 = new HashMap<String, String>();
+                while (iter3.hasNext()){
+                    cursor3.moveToPosition(iter3.next());
+                    if (cursor3.getString(0).contains("/")||cursor3.getString(0).contains(".")){
+                        continue;
+                    }
+                    hm3.put(cursor3.getString(0),cursor3.getString(1));
+                }
+                databaseReference.child("daily").child("ele_5").setValue(hm3);
+                cursor3.close();
+                Log.d("db","ele5_END");
+
+                int middle;
+                Set<Integer> set4 = new TreeSet<Integer>();
+                Cursor cursor4 = sqlDB.rawQuery("SELECT *FROM Word WHERE grade =4;",null);
+                middle = cursor4.getCount();
+                while(set4.size()<30){
+                    int temp2 = rand.nextInt(middle);
+                    set4.add(temp2);
+                }
+                Iterator<Integer> iter4 = set4.iterator();
+                HashMap<String,String> hm4 = new HashMap<String, String>();
+                while (iter4.hasNext()){
+                    cursor4.moveToPosition(iter4.next());
+                    if (cursor4.getString(0).contains("/")||cursor4.getString(0).contains(".")){
+                        continue;
+                    }
+                    hm4.put(cursor4.getString(0),cursor4.getString(1));
+                }
+                databaseReference.child("daily").child("middle").setValue(hm4);
+                cursor4.close();
+
+                Log.d("db","middle_end");
+
+                int high;
+                Set<Integer> set5 = new TreeSet<Integer>();
+                Cursor cursor5 = sqlDB.rawQuery("SELECT *FROM Word WHERE grade =5;",null);
+                high = cursor5.getCount();
+                while(set5.size()<30){
+                    int temp2 = rand.nextInt(high);
+                    set5.add(temp2);
+                }
+                Iterator<Integer> iter5 = set5.iterator();
+                HashMap<String,String> hm5 = new HashMap<String, String>();
+                while (iter5.hasNext()){
+                    cursor5.moveToPosition(iter5.next());
+                    if (cursor5.getString(0).contains("/")||cursor5.getString(0).contains(".")){
+                        continue;
+                    }
+                    hm5.put(cursor5.getString(0),cursor5.getString(1));
+                }
+
+                databaseReference.child("daily").child("high").setValue(hm5);
+
+                cursor5.close();
+                Log.d("db","high_end");
                 //test
                 sqlDB.close();
             }
