@@ -35,6 +35,7 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
     public void onBindViewHolder(@NonNull @NotNull WordAdapter.WordViewHolder holder, int position) {
         holder.tv_word.setText(arrayList.get(position).getWord());
         holder.tv_mean.setText(arrayList.get(position).getMean());
+        holder.tv_theme.setText(arrayList.get(position).getTheme());
     }
     @Override
     public int getItemCount() {
@@ -45,11 +46,13 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
 
         protected TextView tv_word;
         protected TextView tv_mean;
+        protected TextView tv_theme;
 
         public WordViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             this.tv_word = (TextView) itemView.findViewById(R.id.word_text);
             this.tv_mean = (TextView) itemView.findViewById(R.id.mean_text);
+            this.tv_theme = (TextView) itemView.findViewById(R.id.theme_text);
 
         }
     }

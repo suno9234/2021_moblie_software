@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,43 +32,48 @@ import java.util.List;
 
 public class TotalWords extends AppCompatActivity {
 
-    private ArrayList<Word> arrayList;
     private WordAdapter wordAdapter;
     private RecyclerView recyclerView;
-    private LinearLayoutManager linearLayoutManager;
-    private FirebaseDatabase database;
-    private DatabaseReference databaseReference;
-    private int userGrade;
+
+    private DBHelper mDBHelper;
+    private ArrayList<Word> arrayList;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.total_words);
 
+
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
-        linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mDBHelper = new DBHelper(this);
 
-        arrayList = new ArrayList<>();
+        createRecyclerView(null);
 
-        wordAdapter = new WordAdapter(arrayList);
-        recyclerView.setAdapter(wordAdapter);
+        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Toast.makeText(TotalWords.this, "검색 처리됨 : " + newText, Toast.LENGTH_SHORT).show();
+                createRecyclerView(newText);
+                return true;
+            }
+        });
 
-        database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("users");
+    }
+    private void createRecyclerView(String s) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
         if (user != null) {
             String uid = user.getUid();
-            databaseReference.addValueEventListener(new ValueEventListener() {
+            FirebaseDatabase.getInstance().getReference("users").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Integer year = snapshot.child(uid).child("year").getValue(Integer.class);
-                    if (year == null){
-                        Log.d("test", "nullError");
-                    }
-                    userGrade = year;
-//                    TextView textView = (TextView)findViewById(R.id.test);
-//                    textView.setText(year + ""); 출력 테스트 코드
+                    int year = snapshot.child(uid).child("year").getValue(Integer.class);
+                    recyclerView.setAdapter(new WordAdapter(mDBHelper.getWordList(year,s)));
                 }
                 @Override
                 public void onCancelled(@NonNull @NotNull DatabaseError error) {
@@ -76,20 +82,6 @@ public class TotalWords extends AppCompatActivity {
             });
         }
 
-
-
-
-//        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) findViewById(R.id.search_view);
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                return false;
-//            }
-//        });
     }
 
 }
