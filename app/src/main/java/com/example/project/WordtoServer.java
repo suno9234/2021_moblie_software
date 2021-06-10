@@ -49,6 +49,7 @@ public class WordtoServer extends AppCompatActivity {
                 while (cursor.moveToNext()){
                     Log.d("db",cursor.getString(0));
                 }
+                //test
                 sqlDB.close();
             }
         });
