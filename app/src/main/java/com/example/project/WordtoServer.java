@@ -26,17 +26,30 @@ import java.io.InputStream;
 
 
 public class WordtoServer extends AppCompatActivity {
+
+    DBHelper dbhelper;
+    SQLiteDatabase sqlDB;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_newword_to_server);
+
         copyDBMethod();
 
+        dbhelper = new DBHelper(this);
         Button b = (Button)findViewById(R.id.wordToServer);
         b.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View view){
                 FirebaseDatabase fdb = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference = fdb.getReference();
+                sqlDB = dbhelper.getReadableDatabase();
+                Cursor cursor = sqlDB.rawQuery("SELECT *FROM Word;",null);
+                while (cursor.moveToNext()){
+                    Log.d("db",cursor.getString(0));
+                }
+                sqlDB.close();
             }
         });
 
@@ -106,27 +119,13 @@ class DBHelper extends SQLiteOpenHelper{
     }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL("CREATE TABLE groupTBL (gName CHAR(20) PRIMARY KEY,gNumber INTEGER);");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS groupTBL");
+        onCreate(sqLiteDatabase);
     }
-    public Cursor readRecord(){
-        SQLiteDatabase db = getReadableDatabase();
-        String [] projection={
 
-        };
-        Cursor cursor =db.query(
-          "",
-          projection,
-          null,
-          null,
-          null,
-          null,
-                null
-
-        );
-        return cursor;
-    }
 }
