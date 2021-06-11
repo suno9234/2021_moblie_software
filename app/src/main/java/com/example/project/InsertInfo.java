@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.net.Inet4Address;
+import java.util.HashMap;
 
 public class InsertInfo extends AppCompatActivity {
 
@@ -37,9 +38,16 @@ public class InsertInfo extends AppCompatActivity {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     Spinner spinner = (Spinner)findViewById(R.id.first_enter_year);
                     String _text = spinner.getSelectedItem().toString();
+                    HashMap<String,Integer> map = new HashMap<String,Integer>(){{
+                        put("초1", 1);
+                        put("초3", 2);
+                        put("초5", 3);
+                        put("중딩", 4);
+                        put("고딩", 5);
+                    }};
                     if (user!=null) {
                         String uid = user.getUid();
-                        databaseReference.child("users").child(uid).child("year").setValue(_text);
+                        databaseReference.child("users").child(uid).child("year").setValue(map.get(_text));
                     }
                     Intent intent = new Intent(InsertInfo.this,MenuSelectActivity.class);
                     startActivity(intent);
