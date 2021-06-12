@@ -24,6 +24,7 @@ public class MenuSelectActivity extends AppCompatActivity {
             public void onClick(View view){
                 Intent intent = new Intent(MenuSelectActivity.this,DailyQuizActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 

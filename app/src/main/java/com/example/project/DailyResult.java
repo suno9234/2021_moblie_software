@@ -1,8 +1,12 @@
 package com.example.project;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,12 +36,11 @@ public class DailyResult extends AppCompatActivity {
 
         Log.d("d","dailyResultCreated");
 
-        /*
         firebaseDatabase=FirebaseDatabase.getInstance();
         databaseReference=firebaseDatabase.getReference();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        databaseReference.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("users").child(uid).child("user_daily_answer").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 afterGetUserAnswer(snapshot.getValue(String.class));
@@ -47,7 +50,17 @@ public class DailyResult extends AppCompatActivity {
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
             }
-        });*/
+        });
+
+        Button main = (Button)findViewById(R.id.toMain);
+        main.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DailyResult.this, MenuSelectActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
     private void afterGetUserAnswer(String answer){
         Log.d("result","유저 정답 받아오기 성공");
