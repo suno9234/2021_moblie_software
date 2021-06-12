@@ -24,16 +24,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-<<<<<<< HEAD
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-=======
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
->>>>>>> 4ad367ee41910ddb9191615ac32ad409a8e1eabf
 
 
 public class WordtoServer extends AppCompatActivity {
@@ -51,12 +50,24 @@ public class WordtoServer extends AppCompatActivity {
 
         copyDBMethod();
 
+
+
+
         dbhelper = new DBHelper(this);
         Button b = (Button)findViewById(R.id.wordToServer);
         b.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View view){
                 FirebaseDatabase fdb = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference = fdb.getReference();
+
+
+                String answer ="";
+                while(answer.length()<30){
+                    answer+= (rand.nextInt(4)+1);
+                }
+                Log.d("dbt",answer);
+
+                databaseReference.child("daily").child("answer").setValue(answer);
                 sqlDB = dbhelper.getReadableDatabase();
 
                 int grade_ele1;

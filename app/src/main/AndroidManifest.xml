@@ -21,17 +21,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name =".LoginActivity">
-        </activity>
-        <activity android:name=".MenuSelectActivity">
-        </activity>
-        <activity android:name=".UserInfo"
-            />
+        <activity android:name =".LoginActivity"/>
+        <activity android:name=".MenuSelectActivity"/>
+        <activity android:name=".UserInfo" />
         <activity android:name=".Board" />
         <activity android:name=".InsertInfo"/>
         <activity android:name=".DailyQuizActivity"/>
         <activity android:name=".TotalWords"/>
         <activity android:name=".WordtoServer"/>
+        <activity android:name=".DailyResult"/>
 
     </application>
 

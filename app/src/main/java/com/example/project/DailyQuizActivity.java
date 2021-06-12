@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,7 @@ public class DailyQuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.daily_quiz);
         init();
+
     }
     private void init(){
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -85,21 +87,45 @@ public class DailyQuizActivity extends AppCompatActivity {
         String value = hm.get(key);
         TextView textView = (TextView)findViewById(R.id.mean);
         textView.setText(value);
+
         RadioButton r1 = (RadioButton)findViewById(R.id.ans_1) ;
         r1.setText(key);
 
+        RadioGroup rg = (RadioGroup)findViewById(R.id.radio_box) ;
+
+
         Button next = (Button)findViewById(R.id.next);
         next.setOnClickListener(new Button.OnClickListener(){
+            String userAnswer = "";
             @Override
             public void onClick(View view) {
+
+                RadioButton rb = (RadioButton)findViewById(rg.getCheckedRadioButtonId());
+                switch (rb.getId()){
+                    case R.id.ans_1:
+                        Log.d("dbt","1번");
+                        userAnswer+="1";
+                        break;
+                    case R.id.ans_2:
+                        Log.d("dbt","2번");
+                        userAnswer+="2";
+                        break;
+                    case R.id.ans_3:
+                        Log.d("dbt","3번");
+                        userAnswer+="3";
+                        break;
+                    case R.id.ans_4:
+                        Log.d("dbt","4번");
+                        userAnswer+="4";
+                        break;
+                }
                 if (!iter.hasNext()){
-                    Intent intent = new Intent(DailyQuizActivity.this,MenuSelectActivity.class);
-                    startActivity(intent);
-                    Log.d("dbt","finish");
+                    databaseReference.child("users").child(uid).child("user_daily_answer").setValue(userAnswer);
+                    startResult();
                     finish();
                     return;
                 }
-                Log.d("dbt","if finish_not call");
+
                 String key = (String) iter.next();
                 String value = hm.get(key);
                 TextView textView = (TextView)findViewById(R.id.mean);
@@ -109,12 +135,11 @@ public class DailyQuizActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
+    }
+    private void startResult(){
+        Intent intent = new Intent(DailyQuizActivity.this,DailyResult.class);
+        startActivity(intent);
+        Log.d("makeresult","mmm");
     }
 
 }
