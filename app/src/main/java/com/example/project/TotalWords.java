@@ -58,7 +58,6 @@ public class TotalWords extends AppCompatActivity {
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(TotalWords.this, "검색 처리됨 : " + newText, Toast.LENGTH_SHORT).show();
                 createRecyclerView(newText);
                 return true;
             }
