@@ -45,7 +45,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         });
 
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
-
             @Override
             public boolean onLongClick(View v) {
 
